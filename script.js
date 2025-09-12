@@ -36,3 +36,23 @@ function getQuote() {
       loader.classList.add("hidden");
     });
 }
+
+function darkMode() {
+  const body = document.getElementById("body");
+  const moon = document.getElementById("moon");
+  const sun = document.getElementById("sun");
+
+  sun.style.display = "flex";
+  moon.style.display = "none";
+  body.classList.add("dark-mode");
+}
+
+function lightMode() {
+  const body = document.getElementById("body");
+  const moon = document.getElementById("moon");
+  const sun = document.getElementById("sun");
+
+  sun.style.display = "none";
+  moon.style.display = "flex";
+  body.classList.remove("dark-mode");
+}

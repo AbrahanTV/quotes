@@ -4,25 +4,66 @@
   box-sizing: border-box;
 }
 
+:root {
+  --bg-color: linear-gradient(135deg, #667eea, #764ba2);
+  --container-bg: #ffffff;
+  --text-color: #333;
+  --text-secondary: #666;
+  --button-gradient: linear-gradient(135deg, #667eea, #764ba2);
+  --button-gradient-hover: linear-gradient(135deg, #5a67d8, #6b46c1);
+}
+
 body {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--bg-color);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
+  transition: background 300ms ease-in-out;
+}
+
+.dark-mode {
+  --bg-color: #121212;
+  --container-bg: #1e1e1e;
+  --text-color: #eaeaea;
+  --text-secondary: #b3b3b3;
+  --button-gradient: linear-gradient(135deg, #4f46e5, #7c3aed);
+  --button-gradient-hover: linear-gradient(135deg, #4338ca, #6d28d9);
+}
+
+nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+}
+
+.bi {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+#sun {
+  display: none;
+  color: white;
+}
+
+main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
   width: 350px;
-  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 2rem;
   gap: 1.2rem;
   text-align: center;
-  background: white;
+  background: var(--container-bg);
   color: #444;
   border-radius: 20px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
@@ -35,18 +76,18 @@ body {
 
 h1 {
   font-size: 1.5rem;
-  color: #555;
+  color: var(--text-color);
 }
 
 #quote {
   font-size: 1.1rem;
   font-style: italic;
-  color: #222;
+  color: var(--text-secondary);
 }
 
 #author {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 #loader {
@@ -76,7 +117,7 @@ button {
   padding: 12px 20px;
   border: none;
   border-radius: 25px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--button-gradient);
   color: white;
   font-weight: bold;
   cursor: pointer;
@@ -84,6 +125,6 @@ button {
 }
 
 button:hover {
-  background: linear-gradient(135deg, #5a67d8, #6b46c1);
+  background: var(--button-gradient-hover);
   transform: scale(1.05);
 }
