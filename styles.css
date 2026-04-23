@@ -5,126 +5,253 @@
 }
 
 :root {
-  --bg-color: linear-gradient(135deg, #667eea, #764ba2);
-  --container-bg: #ffffff;
-  --text-color: #333;
-  --text-secondary: #666;
-  --button-gradient: linear-gradient(135deg, #667eea, #764ba2);
-  --button-gradient-hover: linear-gradient(135deg, #5a67d8, #6b46c1);
+  --bg: #040a04;
+  --p: #00ff41;
+  --p-dim: #007a1f;
+  --p-glow: rgba(0, 255, 65, 0.25);
+  --p-glow-strong: rgba(0, 255, 65, 0.5);
+}
+
+.amber {
+  --bg: #080500;
+  --p: #ffb000;
+  --p-dim: #7a5200;
+  --p-glow: rgba(255, 176, 0, 0.25);
+  --p-glow-strong: rgba(255, 176, 0, 0.5);
 }
 
 body {
-  background: var(--bg-color);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
-  transition: background 300ms ease-in-out;
+  background: var(--bg);
+  font-family: "VT323", monospace;
+  color: var(--p);
+  font-size: 1.25rem;
+  min-height: 100vh;
+  transition: background 0.3s ease, color 0.3s ease;
+  position: relative;
+  animation: flicker 12s infinite;
 }
 
-.dark-mode {
-  --bg-color: #121212;
-  --container-bg: #1e1e1e;
-  --text-color: #eaeaea;
-  --text-secondary: #b3b3b3;
-  --button-gradient: linear-gradient(135deg, #4f46e5, #7c3aed);
-  --button-gradient-hover: linear-gradient(135deg, #4338ca, #6d28d9);
+/* Scanlines */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+  pointer-events: none;
+  z-index: 1000;
 }
 
-nav {
-  width: 100%;
+/* Vignette */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* ── Header ── */
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem;
+  padding: 0.75rem 2rem;
+  border-bottom: 1px solid var(--p-dim);
+  font-size: 1.1rem;
+  color: var(--p);
+  text-shadow: 0 0 6px var(--p-glow-strong);
 }
 
-.bi {
-  font-size: 2rem;
-  cursor: pointer;
-}
-
-#sun {
-  display: none;
-  color: white;
-}
-
-main {
-  height: 100vh;
+.header-right {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  color: var(--p-dim);
+}
+
+#clock {
+  letter-spacing: 0.05em;
+}
+
+.mode-btn {
+  background: none;
+  border: none;
+  font-family: "VT323", monospace;
+  font-size: 1.1rem;
+  color: var(--p-dim);
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s, background 0.15s;
+  letter-spacing: 0.02em;
+}
+
+.mode-btn:hover {
+  color: var(--bg);
+  background: var(--p-dim);
+}
+
+/* ── Main ── */
+main {
+  display: flex;
   justify-content: center;
   align-items: center;
+  min-height: calc(100vh - 53px);
+  padding: 3rem 2rem;
 }
 
-.container {
-  width: 500px;
+/* ── Terminal block ── */
+.terminal {
+  width: 100%;
+  max-width: 680px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-  gap: 1.2rem;
-  text-align: center;
-  background: var(--container-bg);
-  color: #444;
-  border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease;
+  gap: 0.6rem;
 }
 
-.container:hover {
-  transform: scale(1.03);
+.t-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  text-shadow: 0 0 6px var(--p-glow-strong);
+  white-space: pre;
 }
 
-h1 {
-  font-size: 2rem;
-  color: var(--text-color);
+.dim {
+  color: var(--p-dim);
+  text-shadow: none;
 }
 
-#quote {
-  font-size: 1.1rem;
-  font-style: italic;
-  color: var(--text-secondary);
+.small {
+  font-size: 1rem;
 }
 
-#author {
+.rule {
+  border: none;
+  border-top: 1px solid var(--p-dim);
+  opacity: 0.4;
+  margin: 0.5rem 0;
+}
+
+/* ── Quote block ── */
+.quote-block {
+  padding: 1.2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 100px;
+}
+
+#category {
   font-size: 0.9rem;
-  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
-#loader {
-  border: 8px solid #f3f3f3;
-  border-top: 8px solid #555;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-  margin: 20px auto;
+.quote-text {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: var(--p);
+  text-shadow: 0 0 8px var(--p-glow-strong), 0 0 20px var(--p-glow);
+}
+
+.author-text {
+  font-size: 1.1rem;
+  color: var(--p-dim);
+}
+
+/* ── Loader ── */
+.loader {
+  font-size: 1.2rem;
+  color: var(--p-dim);
+}
+
+.dots::after {
+  content: "";
+  animation: dot-cycle 1.2s steps(4, end) infinite;
+}
+
+@keyframes dot-cycle {
+  0%   { content: ""; }
+  25%  { content: "."; }
+  50%  { content: ".."; }
+  75%  { content: "..."; }
 }
 
 .hidden {
   display: none;
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+/* ── Command line ── */
+.cmd-line {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
 }
 
-button {
-  padding: 12px 20px;
+button#getQuote {
+  background: none;
   border: none;
-  border-radius: 25px;
-  background: var(--button-gradient);
-  color: white;
-  font-weight: bold;
+  font-family: "VT323", monospace;
+  font-size: 1.25rem;
+  color: var(--p);
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s;
+  padding: 0;
+  text-shadow: 0 0 6px var(--p-glow-strong);
+  transition: background 0.1s, color 0.1s, text-shadow 0.1s;
+  letter-spacing: 0.02em;
 }
 
-button:hover {
-  background: var(--button-gradient-hover);
-  transform: scale(1.05);
+button#getQuote:hover {
+  background: var(--p);
+  color: var(--bg);
+  text-shadow: none;
+}
+
+.cursor {
+  margin-left: 0.4rem;
+  color: var(--p);
+}
+
+/* ── Animations ── */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes flicker {
+  0%, 18%, 20%, 50.1%, 60%, 65.1%, 80%, 90.1%, 92%, 100% { opacity: 1; }
+  19%, 50%, 60.5%, 65%, 90%, 91% { opacity: 0.97; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  header {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+  .header-right {
+    gap: 1rem;
+  }
+  main {
+    padding: 2rem 1rem;
+  }
+  .quote-text {
+    font-size: 1.35rem;
+  }
 }
